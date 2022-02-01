@@ -5,13 +5,16 @@ export default createStore({
   state: {
     pages: [],
     reports: [],
-    firestore: Firestore
+    firestore: Firestore,
+  },
+  getters: {
+    pages(state) {
+      return state.pages;
+    },
   },
   mutations: {
     pages(state, pages) {
       state.pages = pages;
-
-      console.log(pages);
     },
   },
   actions: {
@@ -21,7 +24,7 @@ export default createStore({
       const pages = await firestore.getPages();
 
       commit("pages", pages);
-    }
+    },
   },
   modules: {},
 });

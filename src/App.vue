@@ -1,7 +1,4 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Dashboard</router-link>
-  </div>
   <router-view />
 </template>
 
@@ -11,10 +8,9 @@ import { defineComponent } from "vue";
 export default defineComponent({
   mounted() {
     console.log(this.$router.currentRoute.value);
-  }
+  },
 });
 </script>
-
 
 <style lang="scss">
 #app {
