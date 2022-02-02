@@ -1,5 +1,5 @@
 <template>
-  <div class="psi-dashboard">
+  <div class="psi-dashboard" v-if="dataIsReady">
     <div class="psi-dashboard__header">
       <Header />
     </div>
@@ -12,6 +12,7 @@
       <Footer />
     </div>
   </div>
+  <LoadingSpinner v-else />
 </template>
 
 <script lang="ts">
@@ -19,7 +20,9 @@ import { defineComponent } from "vue";
 
 import Header from "@/components/Header.vue";
 import UrlsTable from "@/components/UrlsTable.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import Footer from "@/components/Footer.vue"; // @ is an alias to /src
+import { mapGetters } from "vuex";
 
 export default defineComponent({
   name: "Home",
@@ -27,6 +30,10 @@ export default defineComponent({
     Header,
     UrlsTable,
     Footer,
+    LoadingSpinner,
+  },
+  computed: {
+    ...mapGetters(["dataIsReady"]),
   },
 });
 </script>

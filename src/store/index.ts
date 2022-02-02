@@ -21,12 +21,16 @@ type UrlReports = {
 
 export default createStore({
   state: {
+    dataIsReady: false,
     urlReports: {},
     firestore: Firestore,
   },
   getters: {
     urlReports(state) {
       return state.urlReports;
+    },
+    dataIsReady(state) {
+      return state.dataIsReady;
     },
   },
   mutations: {
@@ -45,6 +49,7 @@ export default createStore({
       });
 
       state.urlReports = urlReports;
+      state.dataIsReady = true;
     },
   },
   actions: {
