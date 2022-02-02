@@ -26,4 +26,12 @@ export class Firestore {
 
     return pages;
   }
+
+  async getReports() {
+    const col = collection(this.db, "reports");
+    const pagesSnapshot = await getDocs(col);
+    const reports = pagesSnapshot.docs.map(doc => doc.data());
+
+    return reports;
+  }
 }

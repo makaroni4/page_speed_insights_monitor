@@ -1,87 +1,89 @@
 <template>
-  <table class="urls-table">
-    <thead>
-      <tr>
-        <th rowspan="2">URL</th>
+  <div>
+    <table class="urls-table">
+      <thead>
+        <tr>
+          <th rowspan="2">URL</th>
 
-        <th class="urls-table__device-type-row" colspan="4">Mobile</th>
-        <th class="urls-table__device-type-row" colspan="4">Desktop</th>
-      </tr>
+          <th class="urls-table__device-type-row" colspan="4">Mobile</th>
+          <th class="urls-table__device-type-row" colspan="4">Desktop</th>
+        </tr>
 
-      <tr>
-        <th
-          class="urls-table__metric-name"
-          v-for="metric in dashboardConfig.metrics"
-          v-on:click="sortBy('mobile', metric)"
-          v-bind:key="'th-' + metric + '-mobile'"
-        >
-          {{ dashboardConfig.metricsNames[metric] }}
-          <span
-            v-bind:key="`${metric}:${url}:mobile`"
-            v-if="sortDeviceType === 'mobile' && sortMetric === metric"
-            v-bind:class="sortDirectionCssClass()"
-          ></span>
-        </th>
-
-        <th
-          class="urls-table__metric-name"
-          v-for="metric in dashboardConfig.metrics"
-          v-on:click="sortBy('desktop', metric)"
-          v-bind:key="'th-' + metric + '-desktop'"
-        >
-          {{ dashboardConfig.metricsNames[metric] }}
-          <span
-            v-bind:key="`${metric}:${url}:desktop`"
-            v-if="sortDeviceType === 'desktop' && sortMetric === metric"
-            v-bind:class="sortDirectionCssClass()"
-          ></span>
-        </th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr
-        v-for="url in urls"
-        v-bind:key="url"
-        v-on:click="setCurrentUrl(url)"
-        v-bind:class="urlRowCssClass(url)"
-      >
-        <td class="urls-table__url">
-          {{ url }}
-
-          <a
-            class="urls-table__open-url"
-            v-bind:href="currentUrl"
-            target="_blank"
+        <tr>
+          <th
+            class="urls-table__metric-name"
+            v-for="metric in dashboardConfig.metrics"
+            v-on:click="sortBy('mobile', metric)"
+            v-bind:key="'th-' + metric + '-mobile'"
           >
-          </a>
+            {{ dashboardConfig.metricsNames[metric] }}
+            <span
+              v-bind:key="`${metric}:${url}:mobile`"
+              v-if="sortDeviceType === 'mobile' && sortMetric === metric"
+              v-bind:class="sortDirectionCssClass()"
+            ></span>
+          </th>
 
-          <a
-            class="urls-table__open-psi-report"
-            v-bind:href="PSIUrl(currentUrl)"
-            target="_blank"
+          <th
+            class="urls-table__metric-name"
+            v-for="metric in dashboardConfig.metrics"
+            v-on:click="sortBy('desktop', metric)"
+            v-bind:key="'th-' + metric + '-desktop'"
           >
-          </a>
-        </td>
+            {{ dashboardConfig.metricsNames[metric] }}
+            <span
+              v-bind:key="`${metric}:${url}:desktop`"
+              v-if="sortDeviceType === 'desktop' && sortMetric === metric"
+              v-bind:class="sortDirectionCssClass()"
+            ></span>
+          </th>
+        </tr>
+      </thead>
 
-        <td
-          :key="metric"
-          v-for="metric in dashboardConfig.metrics"
-          v-bind:class="tdClass(url, 'mobile')"
+      <tbody>
+        <tr
+          v-for="url in urls"
+          v-bind:key="url"
+          v-on:click="setCurrentUrl(url)"
+          v-bind:class="urlRowCssClass(url)"
         >
-          {{ latestMetric(url, "mobile", metric) }}
-        </td>
+          <td class="urls-table__url">
+            {{ url }}
 
-        <td
-          :key="metric"
-          v-for="metric in dashboardConfig.metrics"
-          v-bind:class="tdClass(url, 'desktop')"
-        >
-          {{ latestMetric(url, "desktop", metric) }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <a
+              class="urls-table__open-url"
+              v-bind:href="currentUrl"
+              target="_blank"
+            >
+            </a>
+
+            <a
+              class="urls-table__open-psi-report"
+              v-bind:href="PSIUrl(currentUrl)"
+              target="_blank"
+            >
+            </a>
+          </td>
+
+          <td
+            :key="metric"
+            v-for="metric in dashboardConfig.metrics"
+            v-bind:class="tdClass(url, 'mobile')"
+          >
+            {{ latestMetric(url, "mobile", metric) }}
+          </td>
+
+          <td
+            :key="metric"
+            v-for="metric in dashboardConfig.metrics"
+            v-bind:class="tdClass(url, 'desktop')"
+          >
+            {{ latestMetric(url, "desktop", metric) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script lang="ts">
@@ -100,7 +102,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["pages"]),
+    ...mapGetters(["pages", "urlReports"]),
     urls(): [] {
       return this.pages.map((page: any) => page.url);
     },
@@ -139,17 +141,25 @@ export default {
       // this.currentUrl = url;
     },
     latestMetric(url, deviceType, metricName) {
-      // const urlData = this.dashboardStore.urlData[url][deviceType];
+      const urlData = this.urlReports[url];
 
-      // const latestTimestamp = Object.keys(urlData).sort(function(a, b){
-      //   return new Date(b) - new Date(a);
-      // })[0];
+      if (!urlData) {
+        return "";
+      }
 
-      // const latestValue = urlData[latestTimestamp][metricName];
+      const deviceData = urlData[deviceType];
 
-      // return latestValue.toFixed(this.dashboardConfig.metricScales[metricName]);
+      if (!deviceData) {
+        return "";
+      }
 
-      return 99;
+      const latestTimestamp = Object.keys(deviceData).sort(function(a, b){
+        return new Date(b) - new Date(a);
+      })[0];
+
+      const latestValue = deviceData[latestTimestamp][metricName];
+
+      return latestValue.toFixed(this.dashboardConfig.metricScales[metricName]);
     },
     sortBy(deviceType, metric, sortDirection = this.sortDirection) {
       // this.sortDeviceType = deviceType;
