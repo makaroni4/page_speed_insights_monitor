@@ -21,22 +21,15 @@ type UrlReports = {
 
 export default createStore({
   state: {
-    pages: [],
     urlReports: {},
     firestore: Firestore,
   },
   getters: {
-    pages(state) {
-      return state.pages;
-    },
     urlReports(state) {
       return state.urlReports;
     },
   },
   mutations: {
-    pages(state, pages) {
-      state.pages = pages;
-    },
     reports(state, reports) {
       const urlReports: UrlReports = {};
 
@@ -58,15 +51,9 @@ export default createStore({
     async initFirestore({ commit }, config: FirestoreConfig) {
       const firestore = new Firestore(config);
 
-      const pages = await firestore.getPages();
-
-      commit("pages", pages);
-
       const reports = await firestore.getReports();
 
       commit("reports", reports);
-
-      console.log(reports);
     },
   },
   modules: {},

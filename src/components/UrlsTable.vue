@@ -102,18 +102,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["pages", "urlReports"]),
-    urls(): [] {
-      return this.pages.map((page: any) => page.url);
+    ...mapGetters(["urlReports"]),
+    urls() {
+      return Object.keys(this.urlReports);
     },
   },
   methods: {
-    urlRowCssClass(url): string {
+    urlRowCssClass(url: string): string {
       let cssClass = "urls-table__row";
 
-      // if (this.currentUrl === url) {
-      //   cssClass += " urls-table__row--active";
-      // }
+      if (this.currentUrl === url) {
+        cssClass += " urls-table__row--active";
+      }
 
       return cssClass;
     },
@@ -162,12 +162,12 @@ export default {
       return latestValue.toFixed(this.dashboardConfig.metricScales[metricName]);
     },
     sortBy(deviceType, metric, sortDirection = this.sortDirection) {
-      // this.sortDeviceType = deviceType;
-      // this.sortMetric = metric;
-      // this.urls.sort((a, b) => {
-      //   return sortDirection * (this.latestMetric(b, this.sortDeviceType, this.sortMetric) - this.latestMetric(a, this.sortDeviceType, this.sortMetric))
-      // });
-      // this.sortDirection *= -1;
+      this.sortDeviceType = deviceType;
+      this.sortMetric = metric;
+      this.urls.sort((a, b) => {
+        return sortDirection * (this.latestMetric(b, this.sortDeviceType, this.sortMetric) - this.latestMetric(a, this.sortDeviceType, this.sortMetric))
+      });
+      this.sortDirection *= -1;
     },
     tdClass(url, deviceType) {
       return (
@@ -176,7 +176,7 @@ export default {
       );
     },
   },
-  mounted() {
+  mounted(): void {
     this.sortBy("mobile", "speed_index", -1);
 
     this.currentUrl = this.urls[0];
