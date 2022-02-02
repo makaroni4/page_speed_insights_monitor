@@ -24,13 +24,17 @@ export default createStore({
     dataIsReady: false,
     urlReports: {},
     firestore: Firestore,
+    currentUrl: "",
   },
   getters: {
     urlReports(state) {
       return state.urlReports;
     },
-    dataIsReady(state) {
+    dataIsReady(state): boolean {
       return state.dataIsReady;
+    },
+    currentUrl(state): string {
+      return state.currentUrl;
     },
   },
   mutations: {
@@ -50,7 +54,11 @@ export default createStore({
 
       state.urlReports = urlReports;
       state.dataIsReady = true;
+      state.currentUrl = Object.keys(urlReports)[0];
     },
+    currentUrl(state, url) {
+      state.currentUrl = url;
+    }
   },
   actions: {
     async initFirestore({ commit }, config: FirestoreConfig) {
@@ -59,6 +67,9 @@ export default createStore({
       const reports = await firestore.getReports();
 
       commit("reports", reports);
+    },
+    setCurrentUrl({ commit }, url) {
+      commit("currentUrl", url);
     },
   },
   modules: {},

@@ -86,7 +86,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { mapGetters } from "vuex";
 import dashboardConfig from "@/configs/dashboard-config";
 
@@ -95,20 +95,19 @@ export default {
   data() {
     return {
       dashboardConfig: dashboardConfig,
-      currentUrl: null,
       sortDirection: 1,
       sortDeviceType: "mobile",
       sortMetric: "speed_index",
     };
   },
   computed: {
-    ...mapGetters(["urlReports"]),
+    ...mapGetters(["urlReports", "currentUrl"]),
     urls() {
       return Object.keys(this.urlReports);
     },
   },
   methods: {
-    urlRowCssClass(url: string): string {
+    urlRowCssClass(url) {
       let cssClass = "urls-table__row";
 
       if (this.currentUrl === url) {
@@ -117,10 +116,10 @@ export default {
 
       return cssClass;
     },
-    PSIUrl(url: string): string {
+    PSIUrl(url) {
       return `https://developers.google.com/speed/pagespeed/insights/?url=${url}`;
     },
-    sortDirectionCssClass(): string {
+    sortDirectionCssClass() {
       return (
         "urls-table__sort-direction urls-table__sort-direction--" +
         (this.sortDirection === 1 ? "down" : "up")
@@ -138,7 +137,7 @@ export default {
       }
     },
     setCurrentUrl(url) {
-      // this.currentUrl = url;
+      this.$store.dispatch("currentUrl", url);
     },
     latestMetric(url, deviceType, metricName) {
       const urlData = this.urlReports[url];
@@ -176,10 +175,8 @@ export default {
       );
     },
   },
-  mounted(): void {
+  mounted() {
     this.sortBy("mobile", "speed_index", -1);
-
-    this.currentUrl = this.urls[0];
   },
 };
 </script>

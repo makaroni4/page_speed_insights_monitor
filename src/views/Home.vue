@@ -8,6 +8,10 @@
       <UrlsTable />
     </div>
 
+    <div class="psi-dashboard__charts">
+      <MetricCharts />
+    </div>
+
     <div class="psi-dashboard__footer">
       <Footer />
     </div>
@@ -20,6 +24,7 @@ import { defineComponent } from "vue";
 
 import Header from "@/components/Header.vue";
 import UrlsTable from "@/components/UrlsTable.vue";
+import MetricCharts from "@/components/MetricCharts.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import Footer from "@/components/Footer.vue"; // @ is an alias to /src
 import { mapGetters } from "vuex";
@@ -31,6 +36,7 @@ export default defineComponent({
     UrlsTable,
     Footer,
     LoadingSpinner,
+    MetricCharts,
   },
   computed: {
     ...mapGetters(["dataIsReady"]),
