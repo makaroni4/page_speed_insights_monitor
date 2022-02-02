@@ -137,7 +137,7 @@ export default {
       }
     },
     setCurrentUrl(url) {
-      this.$store.dispatch("currentUrl", url);
+      this.$store.dispatch("setCurrentUrl", url);
     },
     latestMetric(url, deviceType, metricName) {
       const urlData = this.urlReports[url];
