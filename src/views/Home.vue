@@ -1,5 +1,5 @@
 <template>
-  <div class="psi-dashboard" v-if="dataIsReady">
+  <div class="psi-dashboard container-xl" v-if="dataIsReady">
     <div class="psi-dashboard__header">
       <Header />
     </div>
@@ -58,24 +58,12 @@ export default defineComponent({
 
   &__charts,
   &__urls-table {
-    width: 1024px;
     margin-left: auto;
     margin-right: auto;
   }
 
   &__charts {
     margin-bottom: 24px;
-  }
-
-  &__responsive-meme {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    @media (min-width: 960px) {
-      display: none;
-    }
   }
 }
 </style>

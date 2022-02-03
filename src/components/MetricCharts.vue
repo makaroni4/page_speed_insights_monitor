@@ -19,7 +19,7 @@
     </div>
 
     <div class="metric-charts__report">
-      <div class="metric-charts__column">
+      <div class="metric-charts__column w-1/2">
         <div class="metric-charts__device-type metric-charts__device-type--mobile">
           Mobile
         </div>
@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <div class="metric-charts__column">
+      <div class="metric-charts__column w-1/2">
         <div class="metric-charts__device-type metric-charts__device-type--desktop">
           Desktop
         </div>

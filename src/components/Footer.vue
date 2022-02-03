@@ -19,7 +19,6 @@
     padding-bottom: 32px;
 
     &__container {
-      width: 1024px;
       margin: 0 auto;
       display: flex;
       align-items: center;

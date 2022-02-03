@@ -163,7 +163,7 @@ export default {
 
 <style lang="scss">
 .chart {
-  width: 496px;
+  width: 100%;
   padding: 8px;
   margin-bottom: 24px;
 
