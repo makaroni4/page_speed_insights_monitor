@@ -2,7 +2,7 @@
   <header class="header">
     <div class="header__container">
       <div class="header__logo">
-        PageSpeed Insights Dashboard
+        PageSpeed Insights Monitor
       </div>
 
       <ul class="header__menu">
