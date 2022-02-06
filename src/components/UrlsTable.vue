@@ -48,21 +48,23 @@
           v-bind:class="urlRowCssClass(url)"
         >
           <td class="urls-table__url">
-            {{ url }}
+            <div class="flex justify-between">
+              <div>
+                {{ url }}
+              </div>
 
-            <a
-              class="urls-table__open-url"
-              v-bind:href="currentUrl"
-              target="_blank"
-            >
-            </a>
+              <div>
+                <a
+                  class="urls-table__open-url"
+                  v-bind:href="currentUrl"
+                  target="_blank" />
 
-            <a
-              class="urls-table__open-psi-report"
-              v-bind:href="PSIUrl(currentUrl)"
-              target="_blank"
-            >
-            </a>
+                <a
+                  class="urls-table__open-psi-report"
+                  v-bind:href="PSIUrl(currentUrl)"
+                  target="_blank" />
+              </div>
+            </div>
           </td>
 
           <td
