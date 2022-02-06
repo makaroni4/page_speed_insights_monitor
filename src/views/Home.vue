@@ -1,5 +1,5 @@
 <template>
-  <div class="psi-dashboard container-xl" v-if="dataIsReady">
+  <div class="psi-dashboard container-xl p-6" v-if="dataIsReady">
     <div class="psi-dashboard__header">
       <Header />
     </div>

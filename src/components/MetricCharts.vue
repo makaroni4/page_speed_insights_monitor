@@ -18,10 +18,9 @@
       </div>
     </div>
 
-    <div class="metric-charts__report">
-      <div class="metric-charts__column w-1/2">
+    <div class="metric-charts__report grid grid-cols-2 gap-x-6">
+      <div class="metric-charts__column">
         <div class="metric-charts__device-type metric-charts__device-type--mobile">
-          Mobile
         </div>
 
         <div class="metric-charts__charts">
@@ -36,9 +35,8 @@
         </div>
       </div>
 
-      <div class="metric-charts__column w-1/2">
+      <div class="metric-charts__column">
         <div class="metric-charts__device-type metric-charts__device-type--desktop">
-          Desktop
         </div>
 
         <div class="metric-charts__chart" v-for="metric in dashboardConfig.metrics" :key="`desktop-${metric}`">
@@ -116,8 +114,6 @@ export default {
   }
 
   &__report {
-    display: flex;
-    justify-content: space-between;
   }
 
   &__device-type {
